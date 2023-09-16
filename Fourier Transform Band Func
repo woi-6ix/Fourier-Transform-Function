@@ -1,0 +1,26 @@
+#Juttada, Satya Sathwik (JSS) [09/16/2023]
+
+#x1 is F
+#x2 is band x1 + 1
+#x3 is G
+
+def fourier_t(x1, x3):
+  """
+  Use Fourier Transform to convert images into Fourier Space (x1 --> F, x3 --> G), calculate conjugates (F*, G*),
+  calculate cross phase correlation (R), then shift back into real space (r).
+  """
+  F = np.fft.fft2(x1) #Fourier Transform to Fourier Space
+  G = np.fft.fft2(x3)
+  Gconj = np.conj(G)
+  R = (F*Gconj)/np.abs(F*Gconj) #Cross Phase Correlation
+  r = np.fft.fftshift(np.fft.ifft(R)) #Back to real space
+  return R, r
+
+visualize_image(x1)
+visualize_image(x2)
+
+print(type(r))
+print(r.shape)
+print(r[0])
+
+print (fourier_t(x1, x3))
